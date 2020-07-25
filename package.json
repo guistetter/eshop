@@ -4,9 +4,13 @@
   "main": "index.js",
   "dependencies": {
     "ejs": "2.6.1",
-    "express": "4.16.4"
+    "express": "4.16.4",
+    "knex": "^0.16.5",
+    "mysql2": "^1.6.5"
   },
-  "devDependencies": {"nodemon": "^2.0.4"},
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
   "scripts": {
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
