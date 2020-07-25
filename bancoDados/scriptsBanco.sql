@@ -147,3 +147,19 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 INSERT INTO `devShop`.`categories` (`id`, `category`, `description`) VALUES ('1', 'Eletronicos', 'Eletronicos');
 INSERT INTO `devShop`.`categories` (`id`, `category`, `description`) VALUES ('2', 'Eletrodomesticos', 'Eletrodomesticos');
 INSERT INTO `devShop`.`categories` (`id`, `category`, `description`) VALUES ('3', 'Celulares', 'Celulares');
+INSERT INTO `devShop`.`categories` (`id`, `category`, `description`) VALUES ('4', 'Geladeira', 'Boa para');
+ 
+update categories set description  = "Geladeiras" where id =4;
+
+INSERT INTO `devShop`.`products` (`id`, `name`, `description`) VALUES (1, 'iphone 8', 'Celular otimpo para...');
+INSERT INTO `devShop`.`products` (`id`, `name`, `description`) VALUES (2, 'Samsung galaxy', 'Celular otimpo para...');
+INSERT INTO `devShop`.`products` (`id`, `name`, `description`) VALUES (3, 'iphone 8', 'Celular otimpo para...');
+INSERT INTO `devShop`.`products` (`id`, `name`, `description`) VALUES (4, 'Samsung galaxy', 'Celular otimpo para...');
+INSERT INTO `devShop`.`products` (`id`, `name`, `description`) VALUES (null, 'Geladeira brastemp', 'Otima escolha..');
+
+INSERT INTO `devShop`.`categories_products` (`product_id`, `categorie_id`) VALUES (1,3); --celular
+INSERT INTO `devShop`.`categories_products` (`product_id`, `categorie_id`) VALUES (2,3); --celular
+INSERT INTO `devShop`.`categories_products` (`product_id`, `categorie_id`) VALUES (5,2); --geladeira
+
+select * from products where id in 
+(select product_id from categories_products where categorie_id = 2 and product_id = id )
