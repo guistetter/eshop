@@ -1,0 +1,26 @@
+{
+  "name": "dev-shop",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "ejs": "2.6.1",
+    "express": "4.16.4"
+  },
+  "devDependencies": {"nodemon": "^2.0.4"},
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guistetter/eshop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guistetter/eshop/issues"
+  },
+  "homepage": "https://github.com/guistetter/eshop#readme",
+  "description": ""
+}
