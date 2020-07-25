@@ -12,14 +12,18 @@ const db = require("knex")({
   }
 })
 
+db.on("query", query => {
+  console.log("SQL debug:", query.sql)
+})
+
 app.set("view engine", "ejs")
 app.use(express.static("public"))
 
 app.get("/", async (req,res) => {
   const categories = await db("categories").select("*")
-res.render("home",{
-  categories:categories
-})
+  res.render("home",{
+    categories:categories
+  })
 })
 
 app.listen(port, err =>{
