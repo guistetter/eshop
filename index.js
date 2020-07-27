@@ -20,35 +20,47 @@ db.on("query", query => {
 app.set("view engine", "ejs")
 app.use(express.static("public"))
 
-app.get("/", async (req,res) => {
-  const categories = await db("categories").select("*")
-  const categoriasWithSlug = categories.map( category => {
-    const newCategory = {...category, slug: slug(category.category)}
-    return newCategory
-  })
-  console.log(categoriasWithSlug)
-  res.render("home",{
-    categories: categoriasWithSlug
-  })
-})
+const getCategoriesById = async(id) => {
+  const category = await db("categories")
+                          .select("*")
+                          .where('id', id)
+  return category
+}
 
-app.get("/categoria/:id/:slug", async(req, res) =>{
+const getCategories = async () =>{
   const categories = await db("categories").select("*")
   const categoriasWithSlug = categories.map( category => {
     const newCategory = {...category, slug: slug(category.category)}
     return newCategory
   })
+  return categoriasWithSlug
+}
+
+const getProductsByCategoryId = async (id) => {
   const products = await db("products").select("*").where("id", function(){
     this
     .select("categories_products.product_id")
     .from("categories_products")
     .whereRaw("categories_products.product_id = products.id")
-    .where("categorie_id", req.params.id)
+    .where("categorie_id", id)
   })
-  const category = await db("categories").select("*").where('id', req.params.id)
+  return products
+}
+
+app.get("/", async (req,res) => {
+  const categories = await getCategories()
+  res.render("home", {
+    categories
+  })
+})
+
+app.get("/categoria/:id/:slug", async(req, res) =>{
+  const categories = await getCategories()
+  const products = await getProductsByCategoryId(req.params.id)
+  const category = await getCategoriesById(req.params.id)
   res.render("category", {
     products,
-    categories: categoriasWithSlug,
+    categories,
     category
   })
 })
