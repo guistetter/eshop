@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 const port = process.env.PORT || 3000
-const slug = require("./utils/slug")
+const category = require("./models/category")
 
 const db = require("knex")({
   client: "mysql2",
@@ -32,20 +32,20 @@ const getProductsByCategoryId = async (id) => {
 }
 
 app.get("/", async (req,res) => {
-  const categories = await getCategories()
+  const categories = await category.getCategories(db)()
   res.render("home", {
     categories
   })
 })
 
 app.get("/categoria/:id/:slug", async(req, res) =>{
-  const categories = await getCategories()
+  const categories = await category.getCategories(db)()
   const products = await getProductsByCategoryId(req.params.id)
-  const category = await getCategoriesById(req.params.id)
+  const categ = await category.getCategoriesById(db)(req.params.id)
   res.render("category", {
     products,
     categories,
-    category
+    category: categ
   })
 })
 
