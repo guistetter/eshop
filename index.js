@@ -27,6 +27,7 @@ app.get("/", async (req,res) => {
 })
 
 app.get("/categoria/:id", async(req, res) =>{
+  const categories = await db("categories").select("*")
   const products = await db("products").select("*").where("id", function(){
     this
     .select("categories_products.product_id")
@@ -34,7 +35,10 @@ app.get("/categoria/:id", async(req, res) =>{
     .whereRaw("categories_products.product_id = products.id")
     .where("categorie_id", req.params.id)
   })
-  res.send(products)
+  res.render("category", {
+    products,
+    categories
+  })
 })
 
 app.listen(port, err =>{
