@@ -41,9 +41,9 @@ app.get("/categoria/:id/:slug", async(req, res) =>{
 
 app.get("/produto/:id/:slug", async(req,res) => {
   const categories = await category.getCategories(db)()
-  const product = await product.getProductById(db)(req.params.id)
+  const prod = await product.getProductById(db)(req.params.id)
   res.render("produto-detail", {
-    product, 
+    product:prod, 
     categories
   })
 })
