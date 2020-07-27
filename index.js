@@ -20,22 +20,6 @@ db.on("query", query => {
 app.set("view engine", "ejs")
 app.use(express.static("public"))
 
-const getCategoriesById = async(id) => {
-  const category = await db("categories")
-                          .select("*")
-                          .where('id', id)
-  return category
-}
-
-const getCategories = async () =>{
-  const categories = await db("categories").select("*")
-  const categoriasWithSlug = categories.map( category => {
-    const newCategory = {...category, slug: slug(category.category)}
-    return newCategory
-  })
-  return categoriasWithSlug
-}
-
 const getProductsByCategoryId = async (id) => {
   const products = await db("products").select("*").where("id", function(){
     this
