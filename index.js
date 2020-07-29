@@ -2,7 +2,9 @@ const express = require("express")
 const app = express()
 const port = process.env.PORT || 3000
 const category = require("./models/category")
-const product = require("./models/product")
+const categories = require("./controllers/categories")
+const products = require("./controllers/products")
+const home = require("./controllers/home")
 
 const db = require("knex")({
   client: "mysql2",
@@ -30,26 +32,12 @@ app.use(async (req, res, next) => {
   next()
 })
 
-app.get("/", async (req,res) => {
-  res.render("home")
-})
+app.get("/", home.getIndex)
 
-app.get("/categoria/:id/:slug", async(req, res) =>{
-  const products = await product.getProductsByCategoryId(db)(req.params.id)
-  const categ = await category.getCategoriesById(db)(req.params.id)
-  res.render("category", {
-    products,
-    category: categ
-  })
-})
+app.get("/categoria/:id/:slug", categories.getCategories(db))
 
-app.get("/produto/:id/:slug", async(req,res) => {
-  const prod = await product.getProductById(db)(req.params.id)
-  res.render("product-detail", {
-    product:prod
-  
-  })
-})
+app.get("/produto/:id/:slug", products.getProducts(db))
+
 app.listen(port, err =>{
   if(err){
     console.log("nao foi possivel iniciar servidor")
