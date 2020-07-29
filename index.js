@@ -2,10 +2,8 @@ const express = require("express")
 const app = express()
 const port = process.env.PORT || 3000
 const category = require("./models/category")
-const home = require("./controllers/home")
 
-const categories = require("./routes/categories")
-const products = require("./routes/products")
+const routes = require("./routes")
 
 const db = require("knex")({
   client: "mysql2",
@@ -33,11 +31,8 @@ app.use(async (req, res, next) => {
   next()
 })
 
-app.get("/", home.getIndex)
 
-app.use(categories(db))
-
-app.use(products(db))
+app.use(routes(db))
 
 app.listen(port, err =>{
   if(err){
