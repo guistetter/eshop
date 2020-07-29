@@ -21,30 +21,33 @@ db.on("query", query => {
 app.set("view engine", "ejs")
 app.use(express.static("public"))
 
-app.get("/", async (req,res) => {
+//middleware para adicionar categoria ao menu
+app.use(async (req, res, next) => {
   const categories = await category.getCategories(db)()
-  res.render("home", {
+  res.locals = {
     categories
-  })
+  }
+  next()
+})
+
+app.get("/", async (req,res) => {
+  res.render("home")
 })
 
 app.get("/categoria/:id/:slug", async(req, res) =>{
-  const categories = await category.getCategories(db)()
   const products = await product.getProductsByCategoryId(db)(req.params.id)
   const categ = await category.getCategoriesById(db)(req.params.id)
   res.render("category", {
     products,
-    categories,
     category: categ
   })
 })
 
 app.get("/produto/:id/:slug", async(req,res) => {
-  const categories = await category.getCategories(db)()
   const prod = await product.getProductById(db)(req.params.id)
   res.render("product-detail", {
-    product:prod, 
-    categories
+    product:prod
+  
   })
 })
 app.listen(port, err =>{
