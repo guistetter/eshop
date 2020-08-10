@@ -30,7 +30,7 @@ const login = db => async(email, passwd) => {
   if(!bcrypt.compareSync(passwd, user[0].passwd)){
     throw new Error('usuario invalido, senha')
   }
-  return user
+  return user[0]
 }
 
 module.exports = {
