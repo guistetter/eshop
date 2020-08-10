@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "ejs": "2.6.1",
     "express": "4.16.4",
     "knex": "^0.16.5",

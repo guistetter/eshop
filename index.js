@@ -9,8 +9,10 @@ const db = require("knex")({
 })
 
 const app = require("./app")(db)
-
 const port = process.env.PORT || 3000
+
+const user = require('./models/user')
+user.initialUser(db)()
 
 db.on("query", query => {
   console.log("SQL debug:", query.sql)
