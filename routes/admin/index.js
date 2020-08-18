@@ -4,6 +4,7 @@ const init = db => {
   const categories = require("./categories")
   //const products = require("./products")
 
+  router.get('/',(req,res) => res.send('admin'))
   router.use("/categoria", categories(db))
   //router.use("/produto", products(db))
   return router
