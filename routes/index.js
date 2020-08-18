@@ -14,7 +14,7 @@ const init = db => {
   router.get('/logout', auth.logout)
 
   //router
-  router.use('/admin', admin)
+  router.use('/admin', admin(db))
   router.use("/categoria", categories(db))
   router.use("/produto", products(db))
   return router
