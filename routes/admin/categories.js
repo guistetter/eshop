@@ -4,6 +4,10 @@ const init = db => {
   
   router.get("/", categories.adminGetCategories(db))
   //router.get('/', (req,res) => res.send('ola'))
+
+  router.get('/nova', categories.adminCreateCategory(db))
+  router.post('/nova', categories.adminCreateCategory(db))
+
   return router
 }
 
