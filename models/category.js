@@ -41,7 +41,8 @@ const createCategory = db => async(category) => {
   const {error, value } = Joi.validate(category, createSchema ,{abortEarly:false, stripUnknown: true})
   if(error){
     //console.log(extractErrors(error))
-    return extractErrors(error)
+    //lancando o erro para o controller
+    throw new Error({message: 'validation', errors: extractErrors(error)}) 
   }else{
     await db('categories').insert(value)
   }
