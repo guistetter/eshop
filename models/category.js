@@ -9,8 +9,8 @@ const createSchema = Joi.object().keys({
 
 const getCategoriesById = db => async(id) => {
   const category = await db("categories")
-                          .select("*")
-                          .where('id', id)
+    .select("*")
+    .where('id', id)
   return category
 }
 
@@ -23,16 +23,30 @@ const getCategories = db => async () =>{
   return categoriasWithSlug
 }
 
+//tratar a msg de erro
+const extractErrors = error =>{
+  return error.details.reduce((previous, current) => {
+    //se existe o path do erro 
+    if(previous[current.path[0]]){
+      //add o erro no vetor
+        previous[current.path[0]].push(current.type)
+    } else {
+      previous[current.path[0]] = [current.type]
+    }
+    return previous
+  }, {})
+}
+
 const createCategory = db => async(category) => {
   const {error, value } = Joi.validate(category, createSchema ,{abortEarly:false, stripUnknown: true})
   if(error){
-    console.log(error.details)
-    return error
+    //console.log(extractErrors(error))
+    return extractErrors(error)
   }else{
-
     await db('categories').insert(value)
   }
 }
+
 module.exports = {
   getCategories, 
   getCategoriesById, 
