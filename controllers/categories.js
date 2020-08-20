@@ -22,8 +22,13 @@ const adminCreateCategory = db => async(req,res) =>{
   if(req.method === "GET"){
     res.render('admin/categories/create')
   } else {
-    await category.createCategory(db)(req.body)
-    res.send(req.body)
+    //pegando o formulario já validado e pegando o error validado vindo do model
+    try{
+      await category.createCategory(db)(req.body)
+      res.send(req.body)
+    }catch(err){
+      res.send(err)
+    }
   }
 }
 
