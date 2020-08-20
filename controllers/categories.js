@@ -18,11 +18,11 @@ const adminGetCategories = db => async(req,res) => {
 }
 
 const adminCreateCategory = db => async(req,res) =>{
-  console.log(req)
+  //console.log(req)
   if(req.method === "GET"){
     res.render('admin/categories/create')
   } else {
-    await category.createCategory(req.body)
+    await category.createCategory(db)(req.body)
     res.send(req.body)
   }
 }
