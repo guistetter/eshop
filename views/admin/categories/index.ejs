@@ -15,6 +15,7 @@
   <div class="container">
     <div class="row">
       <main class="col-sm-12">
+        <a href="/admin/categorias/nova" class="btn btn-success mb-4"> Criar nova categoria </a>
 
         <% categories.forEach( category => { %>
         <article class="card card-product">
@@ -26,7 +27,7 @@
               <aside class="col-sm-4 border-left">
                 <p>
                   <a href="/admin/categorias/editar/11" class="btn btn-primary"> Editar </a>
-                  <a href="/admin/categorias/excluir/11" class="btn btn-secondary"> Excluir </a>
+                  <a href="/admin/categorias/excluir/11" class="btn btn-danger"> Excluir </a>
                 </p>
               </aside> 
             </div> <!-- row.// -->
