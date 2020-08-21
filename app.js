@@ -1,13 +1,12 @@
-
 const init = db => {
-  const category = require("./models/category")
-  const routes = require("./routes")
-
   const express = require("express")
   const app = express()
 
   const bodyParser = require('body-parser')
   const session = require('express-session')
+
+  const category = require("./models/category")(db)
+  const routes = require("./routes")
 
   app.use(bodyParser.json({extended: true}))
   app.use(bodyParser.urlencoded())
@@ -21,7 +20,7 @@ const init = db => {
 
   //middleware para adicionar categoria ao menu
   app.use(async (req, res, next) => {
-    const categories = await category.getCategories(db)()
+    const categories = await category.getCategories()
     const {user} = req.session
       res.locals = {
         categories,
