@@ -44,9 +44,34 @@ const adminRemoveCategory = db => async(req, res) => {
   res.redirect('/admin/categorias')
 }
 
+const adminUpdateCategory = db => async(req,res) =>{
+  //console.log(req)
+  if(req.method === "GET"){
+    const cat = await category.getCategoriesById(db)(req.params.id)
+    console.log(cat)
+    res.render('admin/categories/update',{
+      form: cat[0],
+      errors:[]
+    })
+  } else {
+    //pegando o formulario já validado e pegando o error validado vindo do model
+    try{
+      await category.updateCategory(db)(req.params.id, req.body)
+      //res.send(req.body)
+      res.redirect('/admin/categorias')
+    }catch(err){
+      res.render('admin/categories/update',{
+        form: req.body,
+        errors: err.errors.fields
+      })
+    }
+  }
+}
+
 module.exports = {
   getCategories,
   adminGetCategories,
   adminCreateCategory,
-  adminRemoveCategory
+  adminRemoveCategory,
+  adminUpdateCategory
 }
