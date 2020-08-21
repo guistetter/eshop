@@ -29,6 +29,7 @@ const adminCreateCategory = db => async(req,res) =>{
       res.redirect('/admin/categorias')
     }catch(err){
       res.render('admin/categories/create',{
+        form: req.body,
         errors: err.errors.fields
       })
     }
