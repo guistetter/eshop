@@ -20,7 +20,10 @@ const adminGetCategories = db => async(req,res) => {
 const adminCreateCategory = db => async(req,res) =>{
   //console.log(req)
   if(req.method === "GET"){
-    res.render('admin/categories/create')
+    res.render('admin/categories/create',{
+      form:{},
+      errors:[]
+    })
   } else {
     //pegando o formulario já validado e pegando o error validado vindo do model
     try{
