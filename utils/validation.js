@@ -2,7 +2,7 @@ const Joi = require("@hapi/joi")
 
 //tratar a msg de erro
 const extractErrors = error =>{
-  return error.details.reduce((previous, current) => {
+  const errors =  error.details.reduce((previous, current) => {
     //se existe o path do erro 
     if(previous[current.path[0]]){
       //add o erro no vetor
@@ -12,6 +12,10 @@ const extractErrors = error =>{
     }
     return previous
   }, {})
+  return {
+    errors, 
+    fields: Object.keys(errors)
+  }
 }
 //construtor de erros
 const ValidationError = (message, errors) => ({
