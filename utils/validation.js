@@ -1,3 +1,5 @@
+const Joi = require("@hapi/joi")
+
 //tratar a msg de erro
 const extractErrors = error =>{
   return error.details.reduce((previous, current) => {
@@ -11,13 +13,21 @@ const extractErrors = error =>{
     return previous
   }, {})
 }
+//construtor de erros
+const ValidationError = (message, errors) => ({
+  message,
+  errors
+})
 
 const validate = (obj, schema) => {  
-  const {error, value } = Joi.validate(category, createSchema ,{abortEarly:false, stripUnknown: true})
+  const {error, value } = Joi.validate(obj, schema ,{abortEarly:false, stripUnknown: true})
   if(error){
     //console.log(extractErrors(error))
     //lancando o erro para o controller
-    throw new Error({message: 'validation', errors: extractErrors(error)}) 
+    //throw new Error({message: 'validation', errors: extractErrors(error)}) 
+    throw ValidationError('validation',extractErrors(error)) 
+  } else {
+    return value
   }
 }
 module.exports = {
