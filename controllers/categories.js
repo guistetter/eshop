@@ -39,8 +39,14 @@ const adminCreateCategory = db => async(req,res) =>{
   }
 }
 
+const adminRemoveCategory = db => async(req, res) => {
+  await category.removeCategory(db)(req.params.id)
+  res.redirect('/admin/categorias')
+}
+
 module.exports = {
   getCategories,
   adminGetCategories,
-  adminCreateCategory
+  adminCreateCategory,
+  adminRemoveCategory
 }
