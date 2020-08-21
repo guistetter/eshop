@@ -1,25 +1,25 @@
 const init = db => {
   
-  const category = require("../models/category")
-  const product = require("../models/product")
+  const category = require("../models/category")(db)
+  const product = require("../models/product")(db)
 
-  const getCategories = db => async(req, res) =>{
-    const products = await product.getProductsByCategoryId(db)(req.params.id)
-    const categ = await category.getCategoriesById(db)(req.params.id)
+  const getCategories = async(req, res) =>{
+    const products = await product.getProductsByCategoryId(req.params.id)
+    const categ = await category.getCategoriesById(req.params.id)
     res.render("category", {
       products,
       category: categ
     })
   }
 
-  const adminGetCategories = db => async(req,res) => {
-    const categories = await category.getCategories(db)()
+  const adminGetCategories = async(req,res) => {
+    const categories = await category.getCategories()
     res.render('admin/categories/index',{
       categories
     })
   }
 
-  const adminCreateCategory = db => async(req,res) =>{
+  const adminCreateCategory = async(req,res) =>{
     //console.log(req)
     if(req.method === "GET"){
       res.render('admin/categories/create',{
@@ -29,7 +29,7 @@ const init = db => {
     } else {
       //pegando o formulario já validado e pegando o error validado vindo do model
       try{
-        await category.createCategory(db)(req.body)
+        await category.createCategory(req.body)
         //res.send(req.body)
         res.redirect('/admin/categorias')
       }catch(err){
@@ -41,15 +41,15 @@ const init = db => {
     }
   }
 
-  const adminRemoveCategory = db => async(req, res) => {
-    await category.removeCategory(db)(req.params.id)
+  const adminRemoveCategory = async(req, res) => {
+    await category.removeCategory(req.params.id)
     res.redirect('/admin/categorias')
   }
 
-  const adminUpdateCategory = db => async(req,res) =>{
+  const adminUpdateCategory = async(req,res) =>{
     //console.log(req)
     if(req.method === "GET"){
-      const cat = await category.getCategoriesById(db)(req.params.id)
+      const cat = await category.getCategoriesById(req.params.id)
       console.log(cat)
       res.render('admin/categories/update',{
         form: cat[0],
@@ -58,7 +58,7 @@ const init = db => {
     } else {
       //pegando o formulario já validado e pegando o error validado vindo do model
       try{
-        await category.updateCategory(db)(req.params.id, req.body)
+        await category.updateCategory(req.params.id, req.body)
         //res.send(req.body)
         res.redirect('/admin/categorias')
       }catch(err){
