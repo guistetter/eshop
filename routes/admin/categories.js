@@ -8,6 +8,8 @@ const init = db => {
   router.get('/nova', categories.adminCreateCategory(db))
   router.post('/nova', categories.adminCreateCategory(db))
 
+  router.get('/excluir/:id', categories.adminRemoveCategory(db))
+
   return router
 }
 
