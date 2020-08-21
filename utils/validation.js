@@ -24,12 +24,12 @@ const ValidationError = (message, errors) => ({
 })
 
 const validate = (obj, schema) => {  
-  const {error, value } = Joi.validate(obj, schema ,{abortEarly:false, stripUnknown: true})
+  const {error, value } = Joi.validate(obj, schema ,{abortEarly: false, stripUnknown: true})
   if(error){
     //console.log(extractErrors(error))
     //lancando o erro para o controller
     //throw new Error({message: 'validation', errors: extractErrors(error)}) 
-    throw ValidationError('validation',extractErrors(error)) 
+    throw ValidationError('validation', extractErrors(error)) 
   } else {
     return value
   }
