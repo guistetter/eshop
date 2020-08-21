@@ -24,13 +24,19 @@ const getCategories = db => async () =>{
 }
 
 const createCategory = db => async(category) => {
+  //se nao conseguir inserir a exception é passada pro controller e tratamos lá
     const value = validation.validate(category, createSchema)
     await db('categories').insert(value)
     return true
 }
 
+const removeCategory = db => async(id) =>{
+  await db('categories').where({id}).del()
+}
+
 module.exports = {
   getCategories, 
   getCategoriesById, 
-  createCategory
+  createCategory,
+  removeCategory
 }
