@@ -29,7 +29,7 @@ const init = db => {
     
     pagination.total = productsCount.total
     //calculo para obter o total de paginas
-    pagination.totalPages = parseInt(productsCount.total / pagination.pageSize)
+    pagination.totalPages = Math.ceil(productsCount.total / pagination.pageSize)
     return {
       data: products,
       pagination
