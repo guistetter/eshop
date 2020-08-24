@@ -19,6 +19,16 @@ const init = db => {
       .from("categories_products")
       .where("categorie_id", id)
     }).offset(pagination.currentPage * pagination.pageSize).limit(pagination.pageSize)
+    
+    const productsCount = await db("products").count('* as total').whereIn("id", function(){
+      this
+      .select("categories_products.product_id")
+      .from("categories_products")
+      .where("categorie_id", id)
+    }).first() //com first tiramos de dentro do array
+    
+    pagination.total = productsCount.total
+
     return {
       data: products,
       pagination
