@@ -28,7 +28,8 @@ const init = db => {
     }).first() //com first tiramos de dentro do array
     
     pagination.total = productsCount.total
-
+    //calculo para obter o total de paginas
+    pagination.totalPages = parseInt(productsCount.total / pagination.pageSize)
     return {
       data: products,
       pagination
