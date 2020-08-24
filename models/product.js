@@ -19,7 +19,10 @@ const init = db => {
       .from("categories_products")
       .where("categorie_id", id)
     }).offset(pagination.currentPage * pagination.pageSize).limit(pagination.pageSize)
-    return products
+    return {
+      data: products,
+      pagination
+    }
   }
 
   // const getProductsByCategoryId = async (id) => {
